@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Laut Ikan Lucu - Lengkap</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.9.1/math.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #87CEEB 0%, #4682B4 50%, #F4A460 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,60 C300,100 600,20 900,60 C1050,80 1200,40 1200,60 L1200,120 L0,120 Z" fill="%23FFFFFF" opacity="0.3"></path></svg>') repeat-x;
+            animation: wave 10s linear infinite;
+        }
+        
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-1200px); }
+        }
+        
+        .fish {
+            position: absolute;
+            font-size: 3rem;
+            animation: float 5s ease-in-out infinite;
+            z-index: 0;
+        }
+        
+        .fish:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .fish:nth-child(2) { top: 15%; right: 10%; animation-delay: 0.5s; }
+        .fish:nth-child(3) { top: 25%; left: 15%; animation-delay: 1s; }
+        .fish:nth-child(4) { top: 30%; right: 5%; animation-delay: 1.5s; }
+        .fish:nth-child(5) { top: 40%; left: 25%; animation-delay: 2s; }
+        .fish:nth-child(6) { top: 45%; right: 20%; animation-delay: 2.5s; }
+        .fish:nth-child(7) { top: 55%; left: 10%; animation-delay: 3s; }
+        .fish:nth-child(8) { top: 60%; right: 15%; animation-delay: 3.5s; }
+        .fish:nth-child(9) { top: 70%; left: 30%; animation-delay: 4s; }
+        .fish:nth-child(10) { top: 75%; right: 25%; animation-delay: 4.5s; }
+        .fish:nth-child(11) { top: 20%; left: 50%; animation-delay: 5s; }
+        .fish:nth-child(12) { top: 35%; right: 40%; animation-delay: 5.5s; }
+        .fish:nth-child(13) { top: 50%; left: 60%; animation-delay: 6s; }
+        .fish:nth-child(14) { top: 65%; right: 50%; animation-delay: 6.5s; }
+        .fish:nth-child(15) { top: 80%; left: 40%; animation-delay: 7s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+        }
+        
+        .calculator {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 400px; /* Lebih lebar untuk tombol tambahan */
+            position: relative;
+            z-index: 1;
+        }
+        
+        .display {
+            width: 100%;
+            height: 60px;
+            background: #f0f8ff;
+            border: 2px solid #4682B4;
+            border-radius: 10px;
+            font-size: 24px;
+            text-align: right;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 5 kolom untuk lebih banyak tombol */
+            gap: 10px;
+        }
+        
+        button {
+            height: 50px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            background: #87CEEB;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #4682B4;
+        }
+        
+        button.operator {
+            background: #FF6347;
+        }
+        
+        button.operator:hover {
+            background: #DC143C;
+        }
+        
+        button.clear {
+            background: #FFD700;
+            color: black;
+        }
+        
+        button.clear:hover {
+            background: #FFA500;
+        }
+        
+        button.backspace {
+            background: #32CD32;
+            color: white;
+        }
+        
+        button.backspace:hover {
+            background: #228B22;
+        }
+        
+        button.sci {
+            background: #9370DB;
+        }
+        
+        button.sci:hover {
+            background: #8A2BE2;
+        }
+    </style>
+</head>
+<body>
+    <div class="wave"></div>
+    
+    <div class="fish">🐠</div>
+    <div class="fish">🐟</div>
+    <div class="fish">🐡</div>
+    <div class="fish">🦈</div>
+    <div class="fish">🐙</div>
+    <div class="fish">🐠</div>
+    <div class="fish">🐟</div>
+    <div class="fish">🐡</div>
+    <div class="fish">🦈</div>
+    <div class="fish">🐙</div>
+    <div class="fish">
+        <svg width="50" height="30" viewBox="0 0 50 30">
+            <ellipse cx="25" cy="15" rx="20" ry="10" fill="#FF69B4"/>
+            <circle cx="35" cy="10" r="3" fill="#000"/>
+            <path d="M45 15 Q50 10 45 20" fill="#FF69B4"/>
+            <path d="M5 15 Q0 10 5 20" fill="#FF69B4"/>
+        </svg>
+    </div>
+    <div class="fish">
+        <svg width="50" height="30" viewBox="0 0 50 30">
+            <ellipse cx="25" cy="15" rx="20" ry="10" fill="#00CED1"/>
+            <circle cx="35" cy="10" r="3" fill="#000"/>
+            <path d="M45 15 Q50 10 45 20" fill="#00CED1"/>
+            <path d="M5 15 Q0 10 5 20" fill="#00CED1"/>
+        </svg>
+    </div>
+    <div class="fish">
+        <svg width="50" height="30" viewBox="0 0 50 30">
+            <ellipse cx="25" cy="15" rx="20" ry="10" fill="#FFD700"/>
+            <circle cx="35" cy="10" r="3" fill="#000"/>
+            <path d="M45 15 Q50 10 45 20" fill="#FFD700"/>
+            <path d="M5 15 Q0 10 5 20" fill="#FFD700"/>
+        </svg>
+    </div>
+    
+    <div class="calculator">
+        <input type="text" class="display" id="display" readonly>
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="backspace" onclick="backspace()">⌫</button>
+            <button onclick="appendToDisplay('(')">(</button>
+            <button onclick="appendToDisplay(')')">)</button>
+            <button class="operator" onclick="appendToDisplay('/')">/</button>
+            
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button class="operator" onclick="appendToDisplay('*')">×</button>
+            <button class="sci" onclick="appendToDisplay('^')">^</button>
+            
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button class="operator" onclick="appendToDisplay('-')">-</button>
+            <button class="sci" onclick="calculateFunction('sqrt')">√</button>
+            
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button class="operator" onclick="appendToDisplay('+')">+</button>
+            <button class="sci" onclick="calculateFunction('log')">log</button>
+            
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button class="operator" onclick="calculate()">=</button>
+            <button class="sci" onclick="calculateFunction('sin')">sin</button>
+            <button class="sci" onclick="calculateFunction('cos')">cos</button>
+            
+            <button class="sci" onclick="appendToDisplay(math.pi)">π</button>
+            <button class="sci" onclick="appendToDisplay(math.e)">e</button>
+            <button class="sci" onclick="calculateFunction('tan')">tan</button>
+            <button class="sci" onclick="calculateFunction('ln')">ln</button>
+            <button class="sci" onclick="calculateFunction('factorial')">!</button>
+        </div>
+    </div>
+    
+    <script>
+        let display = document.getElementById('display');
+        
+        function appendToDisplay(value) {
+            display.value += value;
+        }
+        
+        function clearDisplay() {
+            display.value = '';
+        }
+        
+        function backspace() {
+            display.value = display.value.slice(0, -1);
+        }
+        
+        function calculate() {
+            try {
+                display.value = math.evaluate(display.value);
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+        
+        function calculateFunction(func) {
+            try {
+                let value = parseFloat(display.value);
+                switch (func) {
+                    case 'sin': display.value = math.sin(math.unit(value, 'deg')); break;
+                    case 'cos': display.value = math.cos(math.unit(value, 'deg')); break;
+                    case 'tan': display.value = math.tan(math.unit(value, 'deg')); break;
+                    case 'log': display.value = math.log10(value); break;
+                    case 'ln': display.value = math.log(value); break;
+                    case 'sqrt': display.value = math.sqrt(value); break;
+                    case 'factorial': display.value = math.factorial(value); break;
+                }
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
